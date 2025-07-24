@@ -17,7 +17,7 @@ chrome.action.onClicked.addListener((tab) => {
     const transactions = result[0].result;
 
     const values = transactions.map(([main, sub, price, qty]) => {
-      const name = main.replace(/'/g, "''"); // escape single quotes
+      const name = main.replace(/\s+x\s+\d+$/, '') // remove x and quantity from main
       const quantity_per_pack = parseInt(sub.match(/\d+/)?.[0] || "0", 10);
       const cost_per_pack = parseFloat(price.replace(/[^\d.]/g, '')) || 0;
       const quantity = parseInt(qty, 10) || 0;
@@ -25,13 +25,17 @@ chrome.action.onClicked.addListener((tab) => {
     });
 
     const sql = `
-    INSERT INTO items (name, quantity_per_pack, cost_per_pack, quantity)
-    VALUES
-      ${values.join(',\n  ')}
-    ON CONFLICT (name) DO UPDATE SET
-      quantity_per_pack = EXCLUDED.quantity_per_pack,
-      cost_per_pack = EXCLUDED.cost_per_pack,
-      quantity = EXCLUDED.quantity;
+    WITH new_values(name, quantity_per_pack, cost_per_pack, quantity) AS (
+      VALUES
+        ${values.join(',\n  ')}
+    )
+    UPDATE items
+    SET
+      quantity_per_pack = new_values.quantity_per_pack,
+      cost_per_pack = new_values.cost_per_pack,
+      quantity += new_values.quantity
+    FROM new_values
+    WHERE items.name = new_values.name;
     `;
 
     console.log("📦 Generated SQL Query:\n", sql);
