@@ -18,10 +18,10 @@ chrome.action.onClicked.addListener((tab) => {
 
     const values = transactions.map(([main, sub, price, qty]) => {
       const name = main.replace(/\s+x\s+\d+$/, '') // remove x and quantity from main
-      const quantity_per_pack = parseInt(sub.match(/\d+/)?.[0] || "0", 10);
+      const quantity_per_pack = parseInt(sub.match(/\d+/));
       const cost_per_pack = parseFloat(price.replace(/[^\d.]/g, '')) || 0;
-      const quantity = parseInt(qty, 10) || 0;
-      return `('${name}', '${quantity_per_pack}', ${cost_per_pack}, ${quantity})`;
+      const quantity = parseInt(qty);
+      return `('${name}', ${quantity_per_pack}, ${cost_per_pack}, ${quantity})`;
     });
 
     const sql = `
