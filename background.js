@@ -33,7 +33,7 @@ chrome.action.onClicked.addListener((tab) => {
     SET
       quantity_per_pack = new_values.quantity_per_pack,
       cost_per_pack = new_values.cost_per_pack,
-      quantity += new_values.quantity
+      quantity = items.quantity + new_values.quantity
     FROM new_values
     WHERE items.name = new_values.name;
     `;
