@@ -5,10 +5,10 @@ chrome.action.onClicked.addListener((tab) => {
       const rows = Array.from(document.querySelectorAll('.MuiBox-root.css-1yrviot'));
       alert("Go see query in extension console in chrome://extensions/");
       return rows.map(row => {
-        const main = row.querySelector('.MuiTypography-root.MuiTypography-body1.main.css-1h5mriw')?.innerText || "";
-        const sub = row.querySelector('.MuiTypography-root.MuiTypography-body1.sub.css-1h5mriw')?.innerText || "";
-        const price = row.querySelector('.MuiTypography-root.MuiTypography-body1.css-1241l0o')?.innerText || "";
-        const qty = row.querySelector('.MuiTypography-root.MuiTypography-body1.quantity.css-1h5mriw')?.innerText || "";
+        const main = row.querySelector('.MuiTypography-root.MuiTypography-body1.main.css-1h5mriw')?.innerText;
+        const sub = row.querySelector('.MuiTypography-root.MuiTypography-body1.sub.css-1h5mriw')?.innerText;
+        const price = row.querySelector('.MuiTypography-root.MuiTypography-body1.css-1241l0o')?.innerText;
+        const qty = row.querySelector('.MuiTypography-root.MuiTypography-body1.quantity.css-1h5mriw')?.innerText;
         return [main, sub, price, qty];
       });
       
@@ -19,7 +19,7 @@ chrome.action.onClicked.addListener((tab) => {
     const values = transactions.map(([main, sub, price, qty]) => {
       const name = main.replace(/\s+x\s+\d+$/, '') // remove x and quantity from main
       const quantity_per_pack = parseInt(sub.match(/\d+/));
-      const cost_per_pack = parseFloat(price.replace(/[^\d.]/g, '')) || 0;
+      const cost_per_pack = parseFloat(price.replace(/[^\d.]/g, ''))
       const quantity = parseInt(qty);
       return `('${name}', ${quantity_per_pack}, ${cost_per_pack}, ${quantity})`;
     });
