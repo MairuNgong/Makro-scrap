@@ -17,7 +17,7 @@ chrome.action.onClicked.addListener((tab) => {
     const transactions = result[0].result;
 
     const values = transactions.map(([main, sub, price, qty]) => {
-      const name = main.replace(/\s+x\s+\d+$/, '') // remove x and quantity from main
+      const name = main.replace(/(ก\.|มล\.).*$/, '$1');// remove x and quantity from main
       const quantity_per_pack = parseInt(sub.match(/\d+/));
       const cost_per_pack = parseFloat(price.replace(/[^\d.]/g, ''))
       const quantity = parseInt(qty);
