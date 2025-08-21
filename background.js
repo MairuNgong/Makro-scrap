@@ -2,7 +2,7 @@ chrome.action.onClicked.addListener((tab) => {
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
     func: () => {
-      const rows = Array.from(document.querySelectorAll('.MuiBox-root.css-1yrviot'));
+      const rows = Array.from(document.querySelectorAll('.MuiBox-root.css-dvgoqj'));
       alert("Go see query in extension console in chrome://extensions/");
       return rows.map(row => {
         const main = row.querySelector('.MuiTypography-root.MuiTypography-body1.main.css-1h5mriw').innerText;
