@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SQL Generator</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        width: 600px;
+        height: 400px;
+      }
+      .tabbar {
+        display: flex;
+        background: #f0f0f0;
+        border-bottom: 1px solid #ccc;
+      }
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+      }
+      .tab.active {
+        border-bottom: 3px solid #007bff;
+        font-weight: bold;
+      }
+      .tab-content {
+        display: none;
+        padding: 10px;
+        height: calc(100% - 40px);
+      }
+      .tab-content.active {
+        display: block;
+      }
+      textarea {
+        width: 100%;
+        height: 100%;
+        resize: none;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tabbar">
+      <div class="tab active">Update Existing Item</div>
+      <div class="tab">Check For New Item</div>
+    </div>
+
+    <div class="tab-content active" id="update-item">
+      <textarea id="sqlText"></textarea>
+    </div>
+
+    <div class="tab-content" id="check-item">
+      <p>If any item is not exist. Please add it manually.</p>
+      <textarea id="sqlText"></textarea>
+    </div>
+
+    <div class="tab-content">
+      <p>Insert new query....</p>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
